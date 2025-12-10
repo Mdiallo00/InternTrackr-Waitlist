@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InternTrackr – Organize Your Internship Search</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        }
+
+        :root {
+            --primary: #4F46E5;
+            --primary-light: #EEF2FF;
+            --secondary: #10B981;
+            --dark: #1F2937;
+            --light: #F9FAFB;
+            --gray: #6B7280;
+            --border: #E5E7EB;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            background-color: var(--primary);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background: linear-gradient(to bottom, #ffffff, var(--primary-light));
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            color: var(--dark);
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+
+        .highlight {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* Waitlist Form */
+        .waitlist-form {
+            max-width: 600px;
+            margin: 0 auto 60px;
+            background-color: white;
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        input[type="email"] {
+            width: 100%;
+            padding: 16px 16px 16px 48px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        input[type="email"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 16px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #4338CA;
+        }
+
+        .beta-tag {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        .beta-invite {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #FEF3C7;
+            border-radius: 10px;
+            color: #92400E;
+            font-weight: 500;
+        }
+
+        /* Counter Styling */
+        #waitlistCount1, #waitlistCount2 {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-top: 15px !important;
+            padding: 10px;
+            background-color: #f0f4ff;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+
+        /* Description */
+        .description {
+            padding: 80px 0;
+            background-color: var(--light);
+        }
+
+        .description h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--dark);
+        }
+
+        .description p {
+            font-size: 1.125rem;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto 40px;
+            text-align: center;
+        }
+
+        /* Features */
+        .features {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 60px;
+            color: var(--dark);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 30px;
+            border: 1px solid var(--border);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-size: 24px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+
+        .feature-card p {
+            color: var(--gray);
+        }
+
+        /* CTA */
+        .cta {
+            padding: 80px 0;
+            text-align: center;
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta p {
+            font-size: 1.125rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+        }
+
+        .cta button {
+            background-color: white;
+            color: var(--primary);
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        .cta button:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            color: var(--gray);
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .copyright {
+            font-size: 14px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-icons a {
+            color: var(--gray);
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p, .description p {
+                font-size: 1.125rem;
+            }
+            
+            .waitlist-form {
+                padding: 30px 20px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            #waitlistCount1, #waitlistCount2 {
+                font-size: 1rem;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    InternTrackr
+                </div>
+                <div class="beta-tag">Beta Coming Soon</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Never Miss Another Internship Deadline</h1>
+            <p>InternTrackr is a platform designed for students to manage their entire internship search process. Organize applications, resumes, deadlines, interviews, and follow-ups in one simple dashboard.</p>
+            
+            <!-- Waitlist Form -->
+            <div class="waitlist-form">
+                <h2>Join the Waitlist <span class="beta-tag">Beta Access</span></h2>
+                <p style="margin: 15px 0 25px; color: var(--gray);">Be among the first to streamline your internship search and get early access with special beta pricing.</p>
+                
+                <form id="waitlistForm">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" name="email" placeholder="someEmail@yahoo.com" required>
+                        </div>
+                    </div>
+                    <button type="submit">Join Waitlist for Early Access</button>
+                </form>
+                
+                <div class="beta-invite">
+                    <i class="fas fa-star"></i> Beta testers get 3 months free and priority feature requests
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Description -->
+    <section class="description">
+        <div class="container">
+            <h2>Your Centralized Internship Command Center</h2>
+            <p>Students often forget deadlines, lose track of where they applied, or miss important next steps. InternTrackr solves all of that by bringing every aspect of your internship search into one organized, stress-free dashboard. Reduce anxiety, improve organization, and increase your internship success rate.</p>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Core Features</h2>
+            <div class="features-grid">
+                <!-- Feature 1 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-columns"></i>
+                    </div>
+                    <h3>Application Tracking Board</h3>
+                    <p>A visual Kanban-style board to track all internship applications across stages: To Apply, Applied, Interviewing, Offer, and Rejected. Each card stores company details, job links, notes, deadlines, and status updates.</p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tachometer-alt"></i>
+                    </div>
+                    <h3>Dashboard Overview</h3>
+                    <p>Get an instant summary of your entire internship search. See application counts, upcoming deadlines, interviews scheduled, resume versions, and recent activity—all in one glance.</p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Deadline & Calendar System</h3>
+                    <p>Add application deadlines, interview dates, and follow-up reminders. The calendar view displays all upcoming events to prevent missed opportunities, with automatic notifications sent ahead of deadlines.</p>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>Resume Manager</h3>
+                    <p>Upload, organize, and label multiple resumes tailored for different industries or roles. Attach the right resume to each application and ensure you use the perfect version every time.</p>
+                </div>
+                
+                <!-- Feature 5 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sticky-note"></i>
+                    </div>
+                    <h3>Notes & Attachments</h3>
+                    <p>Each internship includes a dedicated notes section for storing recruiter messages, interview prep, company research, and important links. Upload attachments like cover letters, transcripts, or screenshots.</p>
+                </div>
+                
+                <!-- Feature 6 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3>Follow-Up & Interview Tracking</h3>
+                    <p>Schedule follow-up reminders after submitting applications or completing interviews. Store interview details—time, date, location, and notes—directly in the internship card and view them on your calendar.</p>
+                </div>
+                
+                <!-- Feature 7 -->
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3>Email Reminder System</h3>
+                    <p>Get automated reminders for upcoming deadlines, interviews, or follow-ups. Stay ahead without manually checking dates, ensuring you never miss a critical opportunity.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <h2>Take Control of Your Internship Search</h2>
+            <p>Join thousands of students who are transforming their internship hunt from chaotic to coordinated. Sign up for early access and be part of our beta testing community.</p>
+            
+            <!-- Another waitlist form for bottom of page -->
+            <div style="max-width: 500px; margin: 0 auto;">
+                <form id="bottomWaitlistForm">
+                    <div class="input-wrapper" style="margin-bottom: 20px;">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email2" name="email" placeholder="you@university.edu" required style="padding-right: 140px;">
+                    </div>
+                    <button type="submit">Join Beta Waitlist</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="logo" style="color: var(--primary);">
+                    <div class="logo-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    InternTrackr
+                </div>
+                <div class="copyright">
+                    &copy; 2026 InternTrackr. Designed for students, by Mamadou Diallo.
+                </div>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+<!-- Supabase CDN -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("DOM Loaded. Supabase global:", supabase);
+
+    // Initialize Supabase
+    const supabaseUrl = "https://qktqqvlubaufommjandb.supabase.co";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFrdHFxdmx1YmF1Zm9tbWphbmRiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjUzMTU1MjMsImV4cCI6MjA4MDg5MTUyM30.NPt0e_va-zJQZ10_ChbMm_Xy73z9qoRLAgKUroTSZTM";
+    const db = supabase.createClient(supabaseUrl, supabaseKey);
+
+    console.log("Supabase client initialized:", db);
+
+    // Insert counter display under forms
+    document.querySelector("#waitlistForm").insertAdjacentHTML(
+        "afterend",
+        `<p id="waitlistCount1" style="margin-top: 10px; color:#4F46E5; font-weight:600;">Loading waitlist count...</p>`
+    );
+
+    document.querySelector("#bottomWaitlistForm").insertAdjacentHTML(
+        "afterend",
+        `<p id="waitlistCount2" style="margin-top: 10px; color:#4F46E5; font-weight:600;">Loading waitlist count...</p>`
+    );
+
+    // Attach form listeners
+    document.getElementById("waitlistForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        const email = document.getElementById("email").value;
+        submitWaitlist(email);
+    });
+
+    document.getElementById("bottomWaitlistForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        const email = document.getElementById("email2").value;
+        submitWaitlist(email);
+    });
+
+    // SIMPLE COUNT FUNCTION - This should work
+    async function updateWaitlistCount() {
+        try {
+            console.log("Fetching count from Waitlist table...");
+            
+            // METHOD 1: Direct SQL count query (if RPC is enabled)
+            try {
+                const { data, error } = await db.rpc('get_waitlist_count');
+                if (!error && data !== undefined) {
+                    console.log("Count from RPC:", data);
+                    updateCounterDisplays(data);
+                    return;
+                }
+            } catch (rpcErr) {
+                console.log("RPC not available, trying alternative...");
+            }
+            
+            // METHOD 2: Get all rows and count manually (most reliable)
+            const { data, error } = await db
+                .from('Waitlist')
+                .select('*');
+            
+            if (error) {
+                console.error("Error fetching data:", error);
+                updateCounterDisplays("Error loading count");
+                return;
+            }
+            
+            console.log("Data fetched:", data);
+            const count = data ? data.length : 0;
+            console.log("Manual count:", count);
+            
+            updateCounterDisplays(count);
+            
+        } catch (err) {
+            console.error("Error in updateWaitlistCount:", err);
+            updateCounterDisplays("Error loading count");
+        }
+    }
+
+    // Helper function to update displays
+    function updateCounterDisplays(count) {
+        if (typeof count === 'number') {
+            document.getElementById("waitlistCount1").textContent =
+                `🎉 ${count} people have already joined the waitlist!`;
+            document.getElementById("waitlistCount2").textContent =
+                `🎉 ${count} people have already joined the waitlist!`;
+        } else {
+            document.getElementById("waitlistCount1").textContent = count;
+            document.getElementById("waitlistCount2").textContent = count;
+        }
+    }
+
+    // Submit email
+    async function submitWaitlist(email) {
+        console.log("Submitting to Supabase:", email);
+
+        const { data, error } = await db
+            .from("Waitlist")
+            .insert([{ Email: email }]);
+
+        if (error) {
+            console.error("❌ Supabase insert error:", error);
+            alert("❌ Something went wrong. Please try again.");
+            return;
+        }
+
+        console.log("Supabase insert success:", data);
+
+        document.getElementById("email").value = "";
+        document.getElementById("email2").value = "";
+
+        // Refresh counter after new signup
+        await updateWaitlistCount();
+        alert("✅ You've joined the waitlist! We'll notify you when the beta opens");
+    }
+
+    // Load count on page load
+    updateWaitlistCount();
+    
+    // DEBUG: Test query in console
+    setTimeout(async () => {
+        console.log("=== DEBUG TEST ===");
+        console.log("Testing direct query...");
+        
+        // Test 1: Simple select
+        const testResult = await db.from('Waitlist').select('*');
+        console.log("Test Result:", testResult);
+        console.log("Data:", testResult.data);
+        console.log("Count (data.length):", testResult.data ? testResult.data.length : 0);
+        
+        // Test 2: Try with limit 1
+        const testSingle = await db.from('Waitlist').select('*').limit(1);
+        console.log("Single row test:", testSingle);
+        
+        console.log("=== END DEBUG ===");
+    }, 1000);
+});
+</script>
+</body>
+</html>
